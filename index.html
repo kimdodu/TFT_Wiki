@@ -26,7 +26,7 @@
         }
 
         .sidebar {
-            width: 300px;
+            width: 320px;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 0 20px 20px 0;
@@ -36,9 +36,7 @@
             overflow: hidden;
             position: relative;
             display: flex;
-            /* 추가 */
             flex-direction: column;
-            /* 추가 */
         }
 
         .sidebar.collapsed {
@@ -53,9 +51,7 @@
             justify-content: space-between;
             align-items: center;
             flex-shrink: 0;
-            /* 추가 - 크기 고정 */
         }
-
 
         .sidebar.collapsed .sidebar-header {
             padding: 20px 15px;
@@ -91,7 +87,6 @@
             padding: 15px;
             transition: all 0.3s ease;
             flex-shrink: 0;
-            /* 추가 - 크기 고정 */
         }
 
         .sidebar.collapsed .search-box {
@@ -147,15 +142,25 @@
             transform: translateX(5px);
         }
 
+        .sidebar.collapsed .item:hover {
+            transform: none;
+        }
+
         .item.active {
             background: linear-gradient(45deg, #ff6b6b, #ee5a24);
             color: white;
             transform: translateX(5px);
         }
 
+        .sidebar.collapsed .item.active {
+            transform: none;
+        }
+
         .item-icon {
             width: 30px;
             height: 30px;
+            min-width: 30px;
+            min-height: 30px;
             border-radius: 50%;
             margin-right: 12px;
             display: flex;
@@ -165,16 +170,25 @@
             transition: margin 0.3s ease;
             overflow: hidden;
             border: 2px solid rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
+        }
+
+        .sidebar.collapsed .item-icon {
+            margin-right: 0;
         }
 
         .item-icon img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border-radius: 50%;
         }
 
-        .sidebar.collapsed .item-icon {
-            margin-right: 0;
+        .item-image img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 15px;
         }
 
         .item-name {
@@ -247,23 +261,16 @@
         }
 
         .item-image {
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             margin: 0 auto 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            background: linear-gradient(180deg, #e4e4ee, #666677);
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
             overflow: hidden;
-        }
-
-        .item-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 20px;
         }
 
         .item-image .placeholder {
@@ -273,7 +280,7 @@
 
         .item-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             margin-top: 30px;
         }
@@ -325,6 +332,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         .combination-item {
@@ -334,12 +342,17 @@
             overflow: hidden;
             border: 2px solid rgba(255, 255, 255, 0.3);
             background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
         }
 
         .combination-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border-radius: 6px;
         }
 
         .combination-plus {
@@ -365,6 +378,20 @@
         .item-list::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 255, 255, 0.5);
         }
+
+        .content-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content-body::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+
+        .content-body::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
     </style>
 </head>
 
@@ -381,139 +408,7 @@
             </div>
 
             <div class="item-list" id="itemList">
-                <!-- AD 아이템들 -->
-                <div class="item" onclick="selectItem('SteraksGage', this)">
-                    <div class="item-icon" style="background: #ffd93d;">
-                        <img src="item/TFT_Item_SteraksGage.png" alt="스테락의 도전"
-                            onerror="this.style.display='none'; this.parentElement.innerHTML='⚔️';">
-                    </div>
-                    <div class="item-name">스테락의 도전</div>
-                </div>
-                <div class="item" onclick="selectItem('InfinityEdge', this)">
-                    <div class="item-icon" style="background: #ff4757;">
-                        <img src="item/TFT_Item_InfinityEdge.png" alt="무한의 대검"
-                            onerror="this.style.display='none'; this.parentElement.innerHTML='⚔️';">
-                    </div>
-                    <div class="item-name">무한의 대검</div>
-                </div>
-                <div class="item" onclick="selectItem('Bloodthirster', this)">
-                    <div class="item-icon" style="background: #c44569;">
-                        <img src="item/TFT_Item_Bloodthirster.png" alt="피바라기"
-                            onerror="this.style.display='none'; this.parentElement.innerHTML='🩸';">
-                    </div>
-                    <div class="item-name">피바라기</div>
-                </div>
-                <div class="item" onclick="selectItem('LastWhisper', this)">
-                    <div class="item-icon" style="background: #8c7ae6;">
-                        <img src="item/TFT_Item_LastWhisper.png" alt="최후의 속삭임"
-                            onerror="this.style.display='none'; this.parentElement.innerHTML='🏹';">
-                    </div>
-                    <div class="item-name">최후의 속삭임</div>
-                </div>
-                <div class="item" onclick="selectItem('GuinsoosRageblade', this)">
-                    <div class="item-icon" style="background: #ffa502;">
-                        <img src="item/TFT_Item_GuinsoosRageblade.png" alt="구인수의 격노검"
-                            onerror="this.style.display='none'; this.parentElement.innerHTML='⚡';">
-                    </div>
-                    <div class="item-name">구인수의 격노검</div>
-                </div>
-
-                <!-- AP 아이템들 -->
-                <div class="item" onclick="selectItem('RabadonsDeathcap', this)">
-                    <div class="item-icon" style="background: #9c88ff;">
-                        <img src="item/TFT_Item_RabadonsDeathcap.png" alt="라바돈의 죽음모자"
-                            onerror="this.style.display='none'; this.parentElement.innerHTML='🎩';">
-                    </div>
-                    <div class="item-name">라바돈의 죽음모자</div>
-                </div>
-                <div class="item" onclick="selectItem('JeweledGauntlet', this)">
-                    <div class="item-icon" style="background: #00d2d3;">
-                        <img src="item/TFT_Item_JeweledGauntlet.png" alt="보석 건틀릿"
-                            onerror="this.style.display='none'; this.parentElement.innerHTML='💎';">
-                    </div>
-                    <div class="item-name">보석 건틀릿</div>
-                </div>
-                <div class="item" onclick="selectItem('SpearOfShojin', this)">
-                    <div class="item-icon" style="background: #ff9ff3;">
-                        <img src="item/TFT_Item_SpearOfShojin.png" alt="쇼진의 창"
-                            onerror="this.style.display='none'; this.parentElement.innerHTML='🗡️';">
-                    </div>
-                    <div class="item-name">쇼진의 창</div>
-                </div>
-                <div class="item" onclick="selectItem('ArchangelsStaff', this)">
-                    <div class="item-icon" style="background: #54a0ff;">
-                        <img src="item/TFT_Item_ArchangelsStaff.png" alt="대천사의 지팡이"
-                            onerror="this.style.display='none'; this.parentElement.innerHTML='🪄';">
-                    </div>
-                    <div class="item-name">대천사의 지팡이</div>
-                </div>
-                <div class="item" onclick="selectItem('Morellonomicon', this)">
-                    <div class="item-icon" style="background: #ff6b35;">
-                        <img src="item/TFT_Item_Morellonomicon.png" alt="모렐로노미콘"
-                            onerror="this.style.display='none'; this.parentElement.innerHTML='🔥';">
-                    </div>
-                    <div class="item-name">모렐로노미콘</div>
-                </div>
-
-                <!-- 탱커 아이템들 -->
-                <div class="item" onclick="selectItem('WarmogsArmor', this)">
-                    <div class="item-icon" style="background: #2ed573;">
-                        <img src="item/TFT_Item_WarmogsArmor.png" alt="워모그의 갑옷"
-                            onerror="this.style.display='none'; this.parentElement.innerHTML='🛡️';">
-                    </div>
-                    <div class="item-name">워모그의 갑옷</div>
-                </div>
-                <div class="item" onclick="selectItem('BrambleVest', this)">
-                    <div class="item-icon" style="background: #5f27cd;">
-                        <img src="item/TFT_Item_BrambleVest.png" alt="덤불 조끼"
-                            onerror="this.style.display='none'; this.parentElement.innerHTML='🌵';">
-                    </div>
-                    <div class="item-name">덤불 조끼</div>
-                </div>
-                <div class="item" onclick="selectItem('DragonsClaw', this)">
-                    <div class="item-icon" style="background: #ff3838;">
-                        <img src="item/TFT_Item_DragonsClaw.png" alt="용의 발톱"
-                            onerror="this.style.display='none'; this.parentElement.innerHTML='🐲';">
-                    </div>
-                    <div class="item-name">용의 발톱</div>
-                </div>
-                <div class="item" onclick="selectItem('GargoyleStoneplate', this)">
-                    <div class="item-icon" style="background: #747d8c;">
-                        <img src="item/TFT_Item_GargoyleStoneplate.png" alt="가고일 돌갑옷"
-                            onerror="this.style.display='none'; this.parentElement.innerHTML='🗿';">
-                    </div>
-                    <div class="item-name">가고일 돌갑옷</div>
-                </div>
-
-                <!-- 기타 아이템들 -->
-                <div class="item" onclick="selectItem('Quicksilver', this)">
-                    <div class="item-icon" style="background: #ddd;">
-                        <img src="item/TFT_Item_Quicksilver.png" alt="수은"
-                            onerror="this.style.display='none'; this.parentElement.innerHTML='💍';">
-                    </div>
-                    <div class="item-name">수은</div>
-                </div>
-                <div class="item" onclick="selectItem('UnstableConcoction', this)">
-                    <div class="item-icon" style="background: #f1c40f;">
-                        <img src="item/TFT_Item_UnstableConcoction.png" alt="정의의 손"
-                            onerror="this.style.display='none'; this.parentElement.innerHTML='⚖️';">
-                    </div>
-                    <div class="item-name">정의의 손</div>
-                </div>
-                <div class="item" onclick="selectItem('HextechGunblade', this)">
-                    <div class="item-icon" style="background: #e74c3c;">
-                        <img src="item/TFT_Item_HextechGunblade.png" alt="마법공학 총검"
-                            onerror="this.style.display='none'; this.parentElement.innerHTML='🔫';">
-                    </div>
-                    <div class="item-name">마법공학 총검</div>
-                </div>
-                <div class="item" onclick="selectItem('TitansResolve', this)">
-                    <div class="item-icon" style="background: #2c2c54;">
-                        <img src="item/TFT_Item_TitansResolve.png" alt="거인의 결의"
-                            onerror="this.style.display='none'; this.parentElement.innerHTML='💪';">
-                    </div>
-                    <div class="item-name">거인의 결의</div>
-                </div>
+                <!-- 아이템들이 JavaScript로 동적 생성됩니다 -->
             </div>
         </div>
 
@@ -530,710 +425,561 @@
                     <p>왼쪽 목록에서 아이템을 선택하면<br>상세한 정보를 확인할 수 있습니다.</p>
                 </div>
 
-                <!-- 스테락의 도전 -->
-                <div class="item-card" id="SteraksGage">
-                    <div class="item-image">
-                        <img src="item/TFT_Item_SteraksGage.png" alt="스테락의 도전"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="placeholder" style="display: none;">⚔️</div>
-                    </div>
-                    <div class="item-stats">
-                        <div class="stat-card">
-                            <div class="stat-title">조합법</div>
-                            <div class="stat-value">
-                                <div class="combination">
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_BFSword.png" alt="B.F. 대검"
-                                            onerror="this.innerHTML='⚔️';">
-                                    </div>
-                                    <span class="combination-plus">+</span>
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_GiantsBelt.png" alt="거인의 허리띠"
-                                            onerror="this.innerHTML='🛡️';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">스탯</div>
-                            <div class="stat-value">공격력 +15%, 체력 +150</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">효과</div>
-                            <div class="stat-value">전투당 한 번, 체력이 60%일 때 최대 체력 25% 및 공격력 35% 증가</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">추천 챔피언</div>
-                            <div class="stat-value">탱킹 가능한 딜러, 전사 챔피언</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 무한의 대검 -->
-                <div class="item-card" id="InfinityEdge">
-                    <div class="item-image">
-                        <img src="item/TFT_Item_InfinityEdge.png" alt="무한의 대검"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="placeholder" style="display: none;">⚔️</div>
-                    </div>
-                    <div class="item-stats">
-                        <div class="stat-card">
-                            <div class="stat-title">조합법</div>
-                            <div class="stat-value">
-                                <div class="combination">
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_BFSword.png" alt="B.F. 대검"
-                                            onerror="this.innerHTML='⚔️';">
-                                    </div>
-                                    <span class="combination-plus">+</span>
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_NegatronCloak.png" alt="망토"
-                                            onerror="this.innerHTML='🧥';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">스탯</div>
-                            <div class="stat-value">공격력 +15%, 치명타 확률 +25%</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">효과</div>
-                            <div class="stat-value">스킬이 치명타를 가할 수 있습니다. 이미 가능하다면 치명타 피해 +10%</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">추천 챔피언</div>
-                            <div class="stat-value">AD 딜러, 스킬 딜러</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 피바라기 -->
-                <div class="item-card" id="Bloodthirster">
-                    <div class="item-image">
-                        <img src="item/TFT_Item_Bloodthirster.png" alt="피바라기"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="placeholder" style="display: none;">🩸</div>
-                    </div>
-                    <div class="item-stats">
-                        <div class="stat-card">
-                            <div class="stat-title">조합법</div>
-                            <div class="stat-value">
-                                <div class="combination">
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_BFSword.png" alt="B.F. 대검"
-                                            onerror="this.innerHTML='⚔️';">
-                                    </div>
-                                    <span class="combination-plus">+</span>
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_NegatronCloak.png" alt="망토"
-                                            onerror="this.innerHTML='🧥';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">스탯</div>
-                            <div class="stat-value">공격력 +15%, 마법 저항력 +20</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">효과</div>
-                            <div class="stat-value">20% 모든 피해 흡혈. 가장 체력이 낮은 아군을 피해량의 20%만큼 치료</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">추천 챔피언</div>
-                            <div class="stat-value">지속딜 AD 챔피언</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 최후의 속삭임 -->
-                <div class="item-card" id="LastWhisper">
-                    <div class="item-image">
-                        <img src="item/TFT_Item_LastWhisper.png" alt="최후의 속삭임"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="placeholder" style="display: none;">🏹</div>
-                    </div>
-                    <div class="item-stats">
-                        <div class="stat-card">
-                            <div class="stat-title">조합법</div>
-                            <div class="stat-value">
-                                <div class="combination">
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_BFSword.png" alt="B.F. 대검"
-                                            onerror="this.innerHTML='⚔️';">
-                                    </div>
-                                    <span class="combination-plus">+</span>
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_RecurveBow.png" alt="곡궁" onerror="this.innerHTML='🏹';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">스탯</div>
-                            <div class="stat-value">공격력 +15%, 공격 속도 +15%</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">효과</div>
-                            <div class="stat-value">최대 체력이 1750 이상인 대상에게 25% 추가 피해</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">추천 챔피언</div>
-                            <div class="stat-value">AD 딜러 (탱커 상대용)</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 구인수의 격노검 -->
-                <div class="item-card" id="GuinsoosRageblade">
-                    <div class="item-image">
-                        <img src="item/TFT_Item_GuinsoosRageblade.png" alt="구인수의 격노검"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="placeholder" style="display: none;">⚡</div>
-                    </div>
-                    <div class="item-stats">
-                        <div class="stat-card">
-                            <div class="stat-title">조합법</div>
-                            <div class="stat-value">
-                                <div class="combination">
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_RecurveBow.png" alt="곡궁" onerror="this.innerHTML='🏹';">
-                                    </div>
-                                    <span class="combination-plus">+</span>
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_NeedlesslyLargeRod.png" alt="쓸데없이 큰 지팡이"
-                                            onerror="this.innerHTML='🪄';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">스탯</div>
-                            <div class="stat-value">공격 속도 +15%, 마법력 +15</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">효과</div>
-                            <div class="stat-value">공격할 때마다 공격 속도 5% 증가 (무한 중첩)</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">추천 챔피언</div>
-                            <div class="stat-value">하이브리드 딜러, 온힛 스킬 챔피언</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 라바돈의 죽음모자 -->
-                <div class="item-card" id="RabadonsDeathcap">
-                    <div class="item-image">
-                        <img src="item/TFT_Item_RabadonsDeathcap.png" alt="라바돈의 죽음모자"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="placeholder" style="display: none;">🎩</div>
-                    </div>
-                    <div class="item-stats">
-                        <div class="stat-card">
-                            <div class="stat-title">조합법</div>
-                            <div class="stat-value">
-                                <div class="combination">
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_NeedlesslyLargeRod.png" alt="쓸데없이 큰 지팡이"
-                                            onerror="this.innerHTML='🪄';">
-                                    </div>
-                                    <span class="combination-plus">+</span>
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_NeedlesslyLargeRod.png" alt="쓸데없이 큰 지팡이"
-                                            onerror="this.innerHTML='🪄';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">스탯</div>
-                            <div class="stat-value">마법력 +50</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">효과</div>
-                            <div class="stat-value">마법력 +35% 증가</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">추천 챔피언</div>
-                            <div class="stat-value">AP 메인 딜러</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 보석 건틀릿 -->
-                <div class="item-card" id="JeweledGauntlet">
-                    <div class="item-image">
-                        <img src="item/TFT_Item_JeweledGauntlet.png" alt="보석 건틀릿"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="placeholder" style="display: none;">💎</div>
-                    </div>
-                    <div class="item-stats">
-                        <div class="stat-card">
-                            <div class="stat-title">조합법</div>
-                            <div class="stat-value">
-                                <div class="combination">
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_NeedlesslyLargeRod.png" alt="쓸데없이 큰 지팡이"
-                                            onerror="this.innerHTML='🪄';">
-                                    </div>
-                                    <span class="combination-plus">+</span>
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_NegatronCloak.png" alt="망토"
-                                            onerror="this.innerHTML='🧥';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">스탯</div>
-                            <div class="stat-value">마법력 +15, 치명타 확률 +25%</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">효과</div>
-                            <div class="stat-value">스킬이 치명타를 가할 수 있습니다. 이미 가능하다면 치명타 피해 +10%</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">추천 챔피언</div>
-                            <div class="stat-value">AP 딜러, 스킬 딜러</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 쇼진의 창 -->
-                <div class="item-card" id="SpearOfShojin">
-                    <div class="item-image">
-                        <img src="item/TFT_Item_SpearOfShojin.png" alt="쇼진의 창"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="placeholder" style="display: none;">🗡️</div>
-                    </div>
-                    <div class="item-stats">
-                        <div class="stat-card">
-                            <div class="stat-title">조합법</div>
-                            <div class="stat-value">
-                                <div class="combination">
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_NeedlesslyLargeRod.png" alt="쓸데없이 큰 지팡이"
-                                            onerror="this.innerHTML='🪄';">
-                                    </div>
-                                    <span class="combination-plus">+</span>
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_TearOfTheGoddess.png" alt="여신의 눈물"
-                                            onerror="this.innerHTML='💧';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">스탯</div>
-                            <div class="stat-value">마법력 +15, 마나 +15</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">효과</div>
-                            <div class="stat-value">공격할 때마다 추가 마나 5 획득</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">추천 챔피언</div>
-                            <div class="stat-value">스킬 의존도가 높은 챔피언</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 대천사의 지팡이 -->
-                <div class="item-card" id="ArchangelsStaff">
-                    <div class="item-image">
-                        <img src="item/TFT_Item_ArchangelsStaff.png" alt="대천사의 지팡이"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="placeholder" style="display: none;">🪄</div>
-                    </div>
-                    <div class="item-stats">
-                        <div class="stat-card">
-                            <div class="stat-title">조합법</div>
-                            <div class="stat-value">
-                                <div class="combination">
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_TearOfTheGoddess.png" alt="여신의 눈물"
-                                            onerror="this.innerHTML='💧';">
-                                    </div>
-                                    <span class="combination-plus">+</span>
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_TearOfTheGoddess.png" alt="여신의 눈물"
-                                            onerror="this.innerHTML='💧';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">스탯</div>
-                            <div class="stat-value">마나 +15, 마법력 +15</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">효과</div>
-                            <div class="stat-value">공격할 때마다 공격 속도 5% 증가. 최대 체력의 25% 보호막 8초간 유지. 만료 시 마법력 +25</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">추천 챔피언</div>
-                            <div class="stat-value">AP 캐리, 마나 의존 챔피언</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 모렐로노미콘 -->
-                <div class="item-card" id="Morellonomicon">
-                    <div class="item-image">
-                        <img src="item/TFT_Item_Morellonomicon.png" alt="모렐로노미콘"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="placeholder" style="display: none;">🔥</div>
-                    </div>
-                    <div class="item-stats">
-                        <div class="stat-card">
-                            <div class="stat-title">조합법</div>
-                            <div class="stat-value">
-                                <div class="combination">
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_NeedlesslyLargeRod.png" alt="쓸데없이 큰 지팡이"
-                                            onerror="this.innerHTML='🪄';">
-                                    </div>
-                                    <span class="combination-plus">+</span>
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_GiantsBelt.png" alt="거인의 허리띠"
-                                            onerror="this.innerHTML='🛡️';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">스탯</div>
-                            <div class="stat-value">마법력 +15, 체력 +150</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">효과</div>
-                            <div class="stat-value">마법 피해 후 3초 동안 적의 치유 효과 50% 감소 및 최대 체력의 1% 지속 피해</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">추천 챔피언</div>
-                            <div class="stat-value">광역 AP 딜러</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 워모그의 갑옷 -->
-                <div class="item-card" id="WarmogsArmor">
-                    <div class="item-image">
-                        <img src="item/TFT_Item_WarmogsArmor.png" alt="워모그의 갑옷"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="placeholder" style="display: none;">🛡️</div>
-                    </div>
-                    <div class="item-stats">
-                        <div class="stat-card">
-                            <div class="stat-title">조합법</div>
-                            <div class="stat-value">
-                                <div class="combination">
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_GiantsBelt.png" alt="거인의 허리띠"
-                                            onerror="this.innerHTML='🛡️';">
-                                    </div>
-                                    <span class="combination-plus">+</span>
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_GiantsBelt.png" alt="거인의 허리띠"
-                                            onerror="this.innerHTML='🛡️';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">스탯</div>
-                            <div class="stat-value">체력 +400</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">효과</div>
-                            <div class="stat-value">매초 최대 체력의 1.5% 회복</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">추천 챔피언</div>
-                            <div class="stat-value">메인 탱커</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 덤불 조끼 -->
-                <div class="item-card" id="BrambleVest">
-                    <div class="item-image">
-                        <img src="item/TFT_Item_BrambleVest.png" alt="덤불 조끼"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="placeholder" style="display: none;">🌵</div>
-                    </div>
-                    <div class="item-stats">
-                        <div class="stat-card">
-                            <div class="stat-title">조합법</div>
-                            <div class="stat-value">
-                                <div class="combination">
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_ChainVest.png" alt="사슬 조끼"
-                                            onerror="this.innerHTML='🦺';">
-                                    </div>
-                                    <span class="combination-plus">+</span>
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_ChainVest.png" alt="사슬 조끼"
-                                            onerror="this.innerHTML='🦺';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">스탯</div>
-                            <div class="stat-value">방어력 +50</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">효과</div>
-                            <div class="stat-value">피해를 받으면 인근 적들에게 100 + 방어력 10%만큼 마법 피해</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">추천 챔피언</div>
-                            <div class="stat-value">프론트라인 탱커</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 용의 발톱 -->
-                <div class="item-card" id="DragonsClaw">
-                    <div class="item-image">
-                        <img src="item/TFT_Item_DragonsClaw.png" alt="용의 발톱"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="placeholder" style="display: none;">🐲</div>
-                    </div>
-                    <div class="item-stats">
-                        <div class="stat-card">
-                            <div class="stat-title">조합법</div>
-                            <div class="stat-value">
-                                <div class="combination">
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_NegatronCloak.png" alt="망토"
-                                            onerror="this.innerHTML='🧥';">
-                                    </div>
-                                    <span class="combination-plus">+</span>
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_NegatronCloak.png" alt="망토"
-                                            onerror="this.innerHTML='🧥';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">스탯</div>
-                            <div class="stat-value">마법 저항력 +50</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">효과</div>
-                            <div class="stat-value">마법 피해에 대해 15% 추가 감소. 마법 피해를 받으면 4초간 8% 추가 감소</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">추천 챔피언</div>
-                            <div class="stat-value">AP 딜러 상대 탱커</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 가고일 돌갑옷 -->
-                <div class="item-card" id="GargoyleStoneplate">
-                    <div class="item-image">
-                        <img src="item/TFT_Item_GargoyleStoneplate.png" alt="가고일 돌갑옷"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="placeholder" style="display: none;">🗿</div>
-                    </div>
-                    <div class="item-stats">
-                        <div class="stat-card">
-                            <div class="stat-title">조합법</div>
-                            <div class="stat-value">
-                                <div class="combination">
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_ChainVest.png" alt="사슬 조끼"
-                                            onerror="this.innerHTML='🦺';">
-                                    </div>
-                                    <span class="combination-plus">+</span>
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_NegatronCloak.png" alt="망토"
-                                            onerror="this.innerHTML='🧥';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">스탯</div>
-                            <div class="stat-value">방어력 +20, 마법 저항력 +20</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">효과</div>
-                            <div class="stat-value">인근 적 챔피언 2마리당 방어력과 마법 저항력 +15</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">추천 챔피언</div>
-                            <div class="stat-value">다수의 적과 싸우는 탱커</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 수은 -->
-                <div class="item-card" id="Quicksilver">
-                    <div class="item-image">
-                        <img src="item/TFT_Item_Quicksilver.png" alt="수은"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="placeholder" style="display: none;">💍</div>
-                    </div>
-                    <div class="item-stats">
-                        <div class="stat-card">
-                            <div class="stat-title">조합법</div>
-                            <div class="stat-value">
-                                <div class="combination">
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_NegatronCloak.png" alt="망토"
-                                            onerror="this.innerHTML='🧥';">
-                                    </div>
-                                    <span class="combination-plus">+</span>
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_SparringGloves.png" alt="장갑"
-                                            onerror="this.innerHTML='🧤';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">스탯</div>
-                            <div class="stat-value">마법 저항력 +20, 치명타 확률 +20%</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">효과</div>
-                            <div class="stat-value">전투당 한 번: 체력 60%에서 잠시 대상 지정 불가가 되며 디버프 제거. 공격 속도 15% 증가 [고유]</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">추천 챔피언</div>
-                            <div class="stat-value">메인 딜러 (CC 카운터용)</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 정의의 손 -->
-                <div class="item-card" id="UnstableConcoction">
-                    <div class="item-image">
-                        <img src="item/TFT_Item_UnstableConcoction.png" alt="정의의 손"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="placeholder" style="display: none;">⚖️</div>
-                    </div>
-                    <div class="item-stats">
-                        <div class="stat-card">
-                            <div class="stat-title">조합법</div>
-                            <div class="stat-value">
-                                <div class="combination">
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_TearOfTheGoddess.png" alt="여신의 눈물"
-                                            onerror="this.innerHTML='💧';">
-                                    </div>
-                                    <span class="combination-plus">+</span>
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_SparringGloves.png" alt="장갑"
-                                            onerror="this.innerHTML='🧤';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">스탯</div>
-                            <div class="stat-value">마나 +15, 치명타 확률 +20%</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">효과</div>
-                            <div class="stat-value">공격력 +15%, 마법력 +15. 가한 피해의 12% 치유. 체력에 따라 하나의 효과가 2배</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">추천 챔피언</div>
-                            <div class="stat-value">하이브리드 딜러</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 마법공학 총검 -->
-                <div class="item-card" id="HextechGunblade">
-                    <div class="item-image">
-                        <img src="item/TFT_Item_HextechGunblade.png" alt="마법공학 총검"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="placeholder" style="display: none;">🔫</div>
-                    </div>
-                    <div class="item-stats">
-                        <div class="stat-card">
-                            <div class="stat-title">조합법</div>
-                            <div class="stat-value">
-                                <div class="combination">
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_BFSword.png" alt="B.F. 대검"
-                                            onerror="this.innerHTML='⚔️';">
-                                    </div>
-                                    <span class="combination-plus">+</span>
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_NeedlesslyLargeRod.png" alt="쓸데없이 큰 지팡이"
-                                            onerror="this.innerHTML='🪄';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">스탯</div>
-                            <div class="stat-value">공격력 +15%, 마법력 +15</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">효과</div>
-                            <div class="stat-value">20% 모든 피해 흡혈. 체력 비율이 가장 낮은 아군을 가한 피해의 20%만큼 치유</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">추천 챔피언</div>
-                            <div class="stat-value">하이브리드 딜러, 스킬 딜러</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 거인의 결의 -->
-                <div class="item-card" id="TitansResolve">
-                    <div class="item-image">
-                        <img src="item/TFT_Item_TitansResolve.png" alt="거인의 결의"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="placeholder" style="display: none;">💪</div>
-                    </div>
-                    <div class="item-stats">
-                        <div class="stat-card">
-                            <div class="stat-title">조합법</div>
-                            <div class="stat-value">
-                                <div class="combination">
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_ChainVest.png" alt="사슬 조끼"
-                                            onerror="this.innerHTML='🦺';">
-                                    </div>
-                                    <span class="combination-plus">+</span>
-                                    <div class="combination-item">
-                                        <img src="item/TFT_Item_RecurveBow.png" alt="곡궁" onerror="this.innerHTML='🏹';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">스탯</div>
-                            <div class="stat-value">방어력 +20, 공격 속도 +15%</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">효과</div>
-                            <div class="stat-value">피해를 받거나 가할 때마다 공격력 2% 및 마법력 2 증가 (최대 25중첩)</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-title">추천 챔피언</div>
-                            <div class="stat-value">프론트라인 딜러, 탱커</div>
-                        </div>
-                    </div>
+                <div id="itemCards">
+                    <!-- 아이템 카드들이 JavaScript로 동적 생성됩니다 -->
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        // JSON 데이터
+        const itemData = {
+            "DeathBlade": {
+                "name": "죽음의 검",
+                "type": "완성",
+                "combination": "B.F. 대검 + B.F. 대검",
+                "stat": "공격력 +55%, 피해 증폭 +10%",
+                "effect": "-"
+            },
+            "MadredsBloodrazor": {
+                "name": "거인 학살자",
+                "type": "완성",
+                "combination": "B.F. 대검 + 곡궁",
+                "stat": "공격력 +25% 주문력 +25 공격 속도 +10% 피해 증폭 +5%",
+                "effect": "최대 체력이 1750 이상인 적을 상대로 피해 증폭을 15% 획득"
+            },
+            "GuardianAngel": {
+                "name": "밤의 끝자락",
+                "type": "완성",
+                "combination": "B.F. 대검 + 쇠사슬 조끼",
+                "stat": "공격력 +10% 방어력 +20",
+                "effect": "[고유] 전투당 1회: 체력이 60%일 때 잠시 대상으로 지정할 수 없게 되며 해로운 효과 제거. 이후 추가 공격 속도 15% 획득"
+            },
+            "Bloodthirster": {
+                "name": "피바라기",
+                "type": "완성",
+                "combination": "B.F. 대검 + 음전자 망토",
+                "stat": "공격력 +15% 주문력 +15 모든 피해 흡혈 +20% 마법 저항력 +20",
+                "effect": "전투당 한 번, 체력이 40%일 때 최대 체력의 25%에 해당하는 보호막 획득 후 최대 5초까지 유지"
+            },
+            "HextechGunblade": {
+                "name": "마법공학 총검",
+                "type": "완성",
+                "combination": "B.F. 대검 + 쓸데없이 큰 지팡이",
+                "stat": "공격력 +20% 주문력 +20 모든 피해 흡혈 +18%",
+                "effect": "입힌 피해량의 20%만큼 체력 비율이 가장 낮은 아군의 체력 회복"
+            },
+            "SpearOfShojin": {
+                "name": "쇼진의 창",
+                "type": "완성",
+                "combination": "B.F. 대검 + 여신의 눈물",
+                "stat": "마나 +15 공격력 +15% 주문력 +15",
+                "effect": "기본 공격 시 추가 마나 5 획득"
+            },
+            "SteraksGage": {
+                "name": "스테락의 도전",
+                "type": "완성",
+                "combination": "B.F. 대검 + 거인의 허리띠",
+                "stat": "체력 +300 공격력 +40%",
+                "effect": "생명선: 체력이 60%일 때, 장착 유닛 최대 체력의 60%에 해당하는 보호막 획득.<br/>보호막은 6초에 걸쳐 빠르게 사라짐"
+            },
+            "InfinityEdge": {
+                "name": "무한의 대검",
+                "type": "완성",
+                "combination": "B.F. 대검 + 연습용 장갑",
+                "stat": "공격력 +35% 치명타 확률 +35%",
+                "effect": "스킬에 치명타 적용 가능<br/>기본 스킬에 치명타 적용이 가능한 경우, 대신에 치명타 피해량이 10% 증가"
+            },
+            "RapidFireCannon": {
+                "name": "붉은 덩굴정령",
+                "type": "완성",
+                "combination": "곡궁 + 곡궁",
+                "stat": "공격 속도 +35% 피해 증폭 +3%",
+                "effect": "기본 공격과 스킬이 5초 동안 적에게 불태우기를 1%, 상처를 33% 적용<br/>불태우기: 매초 대상 최대 체력의 일정 비율만큼 고정 피해<br/>상처: 체력 회복량 감소"
+            },
+            "TitansResolve": {
+                "name": "거인의 결의",
+                "type": "완성",
+                "combination": "곡궁 + 쇠사슬 조끼",
+                "stat": "방어력 +20 공격속도 +10%",
+                "effect": "공격하거나 피해를 받으면 공격력 2%, 주문력 2 증가 (최대 25회 중첩)<br/>최대 중첩 시 방어력 20 및 마법 저항력 20 획득"
+            },
+            "KrakenSlayer": {
+                "name": "크라켄의 분노",
+                "type": "완성",
+                "combination": "곡궁 + 음전자 망토",
+                "stat": "공격력 +15 공격속도 +10% 마법 저항력 +20",
+                "effect": "기본 공격 시 공격력 3% 획득 (중첩 가능)"
+            },
+            "GuinsoosRageblade": {
+                "name": "구인수의 격노검",
+                "type": "완성",
+                "combination": "곡궁 + 쓸데없이 큰 지팡이",
+                "stat": "주문력 +10 공격 속도 +10%",
+                "effect": "매초 공격 속도 7% 획득 (중첩 가능)"
+            },
+            "VoidStaff": {
+                "name": "공허의 지팡이",
+                "type": "완성",
+                "combination": "곡궁 + 여신의 눈물",
+                "stat": "주문력 +25 마나 +15 공격 속도 +15%",
+                "effect": "기본 공격 및 스킬로 피해를 입힐 경우 3초 동안 대상에게 파쇄를 30% 적용 (중첩 불가)<br/>파쇄: 마법 저항력 감소"
+            },
+            "Leviathan": {
+                "name": "내셔의 이빨",
+                "type": "완성",
+                "combination": "곡궁 + 거인의 허리띠",
+                "stat": "체력 +150 주문력 +10 공격속도 +10%",
+                "effect": "스킬 사용 후 5초 동안 공격 속도 60% 증가"
+            },
+            "LastWhisper": {
+                "name": "최후의 속삭임",
+                "type": "완성",
+                "combination": "곡궁 + 연습용 장갑",
+                "stat": "공격력 +15% 공격속도 +20% 치명타 확률 +20%",
+                "effect": "[고유] 물리 피해를 입힐 경우 3초 동안 30% 파열 (중첩 불가)<br/>파열: 방어력 감소"
+            },
+            "BrambleVest": {
+                "name": "덤불 조끼",
+                "type": "완성",
+                "combination": "쇠사슬 조끼 + 쇠사슬 조끼",
+                "stat": "방어력 +65",
+                "effect": "최대 체력 +7%<br/>기본 공격으로 받는 피해 8% 감소. 기본 공격에 맞을 경우 인접한 모든 적에게 100의 마법 피해<br/>재사용 대기시간: 2초"
+            },
+            "GargoyleStoneplate": {
+                "name": "가고일 돌갑옷",
+                "type": "완성",
+                "combination": "쇠사슬 조끼 + 음전자 망토",
+                "stat": "체력 +100 방어력 +25 마법 저항력 +25",
+                "effect": "적의 공격 대상이 되면 방어력이 10, 마법 저항력이 10 증가. 공격하는 적이 늘어나면 중첩되어 적용."
+            },
+            "Crownguard": {
+                "name": "크라운가드",
+                "type": "완성",
+                "combination": "쇠사슬 조끼 + 쓸데없이 큰 지팡이",
+                "stat": "체력 +100 주문력 +20 방어력 +20",
+                "effect": "전투 시작: 8초 동안 최대 체력의 25%에 해당하는 보호막 획득<br/>보호막이 사라지면 주문력 25 증가"
+            },
+            "FrozenHeart": {
+                "name": "수호자의 맹세",
+                "type": "완성",
+                "combination": "쇠사슬 조끼 + 여신의 눈물",
+                "stat": "마나 +30 방어력 +20",
+                "effect": "전투당 한 번, 체력이 40%일 때 최대 체력의 25%에 해당하는 보호막 획득 후 5초 동안 유지. 동시에 방어력 20, 마법 저항력 20 획득"
+            },
+            "RedBuff": {
+                "name": "태양불꽃 망토",
+                "type": "완성",
+                "combination": "쇠사슬 조끼 + 거인의 허리띠",
+                "stat": "체력 +150 방어력 +20",
+                "effect": "[고유] 2초마다 2칸 내에 있는 적 하나에게 10초 동안 불태우기를 1%, 상처를 33% 적용<br/>불태우기: 매초 대상 최대 체력의 일정 비율만큼 고정 피해<br/>상처: 체력 회복량 감소"
+            },
+            "NightHarvester": {
+                "name": "굳건한 심장",
+                "type": "완성",
+                "combination": "쇠사슬 조끼 + 연습용 장갑",
+                "stat": "체력 +250 방어력 +20 치명타 확률 +20%",
+                "effect": "내구력 10% 획득. 체력이 50%를 넘으면 대신 내구력 18% 획득"
+            },
+            "DragonsClaw": {
+                "name": "용의 발톱",
+                "type": "완성",
+                "combination": "음전자 망토 + 음전자 망토",
+                "stat": "마법 저항력 +75",
+                "effect": "최대 체력 +9%<br/>2초마다 최대 체력의 2.5% 회복"
+            },
+            "IonicSpark": {
+                "name": "이온 충격기",
+                "type": "완성",
+                "combination": "음전자 망토 + 쓸데없이 큰 지팡이",
+                "stat": "체력 +150 주문력 +15 마법 저항력 +20",
+                "effect": "2칸 내 모든 적에게 파쇄 30% 적용. 해당 적이 스킬 사용 시 사용한 마나의 160%에 해당하는 마법 피해를 입음<br/>파쇄: 마법 저항력 감소"
+            },
+            "AdaptiveHelm": {
+                "name": "적응형 투구",
+                "type": "완성",
+                "combination": "음전자 망토 + 여신의 눈물",
+                "stat": "마나 +15 주문력 +10 마법 저항력 +20",
+                "effect": "전투 시작: 시작 위치에 따라 추가 효과 획득<br/>전방 2열: 방어력과 마법 저항력 40. 기본 공격에 맞으면 마나 1 획득<br/>후방 2열: 주문력 15. 3초마다 마나 10 획득"
+            },
+            "SpectralGauntlet": {
+                "name": "저녁갑주",
+                "type": "완성",
+                "combination": "음전자 망토 + 거인의 허리띠",
+                "stat": "체력 +150 마법 저항력 +20",
+                "effect": "2칸 내에 있는 적 30% 파열<br/>전투 시작 후 15초 동안 방어력과 마법 저항력 25 증가<br/>파열: 방어력 감소"
+            },
+            "Quicksilver": {
+                "name": "수은",
+                "type": "완성",
+                "combination": "음전자 망토 + 연습용 장갑",
+                "stat": "마법 저항력 +20 공격 속도 +30% 치명타 확률 +20%",
+                "effect": "[고유] 전투 시작: 18초 동안 군중 제어 효과에 면역. 이 동안 2초마다 3%의 공격 속도 획득"
+            },
+            "RabadonsDeathcap": {
+                "name": "라바돈의 죽음모자",
+                "type": "완성",
+                "combination": "쓸데없이 큰 지팡이 + 쓸데없이 큰 지팡이",
+                "stat": "주문력 +50, 피해 증폭 +15%",
+                "effect": "-"
+            },
+            "ArchangelsStaff": {
+                "name": "대천사의 지팡이",
+                "type": "완성",
+                "combination": "쓸데없이 큰 지팡이 + 여신의 눈물",
+                "stat": "마나 +15 주문력 +20",
+                "effect": "전투 시작: 전투 중 5초마다 주문력 30 증가"
+            },
+            "Morellonomicon": {
+                "name": "모렐로노미콘",
+                "type": "완성",
+                "combination": "쓸데없이 큰 지팡이 + 거인의 허리띠",
+                "stat": "체력 +150 주문력 +25 공격속도 +10%",
+                "effect": "[고유] 기본 공격 및 스킬이 10초 동안 적에게 불태우기를 1%, 상처를 33% 적용<br/>불태우기: 매초 대상 최대 체력의 일정 비율만큼 고정 피해<br/>상처: 체력 회복량 감소"
+            },
+            "JeweledGauntlet": {
+                "name": "보석 건틀릿",
+                "type": "완성",
+                "combination": "쓸데없이 큰 지팡이 + 연습용 장갑",
+                "stat": "주문력 +35 치명타 확률 +35%",
+                "effect": "스킬에 치명타 적용 가능<br/>기본 스킬에 치명타 적용이 가능한 경우, 대신에 치명타 피해량이 10% 증가"
+            },
+            "BlueBuff": {
+                "name": "푸른 파수꾼",
+                "type": "완성",
+                "combination": "여신의 눈물 + 여신의 눈물",
+                "stat": "마나 +30 주문력 +15 공격력 +15%",
+                "effect": "스킬 사용 후 마나 10 회복<br/>장착한 유닛이 처치 관여 시 8초 동안 5%의 추가 피해"
+            },
+            "spiritvisagerr": {
+                "name": "정령의 형상",
+                "type": "완성",
+                "combination": "여신의 눈물 + 거인의 허리띠",
+                "stat": "체력 +200 마나 +15 내구력 +10%",
+                "effect": "매초 잃은 체력의 2.5% 회복"
+            },
+            "UnstableConcoction": {
+                "name": "정의의 손길",
+                "type": "완성",
+                "combination": "여신의 눈물 + 연습용 장갑",
+                "stat": "마나 +15 치명타 확률 +20",
+                "effect": "2가지 효과 획득:<br/>- 공격력 15%, 주문력 15<br/>- 모든 피해 흡혈 12%<br/>체력이 50%를 넘을 때 공격력 및 주문력이 두 배로 증가하고, 체력이 50% 아래일 때 모든 피해 흡혈이 두 배로 증가합니다."
+            },
+            "WarmogsArmor": {
+                "name": "워모그의 갑옷",
+                "type": "완성",
+                "combination": "거인의 허리띠 + 거인의 허리띠",
+                "stat": "체력 +600",
+                "effect": "12%의 최대 체력 획득"
+            },
+            "PowerGauntlet": {
+                "name": "타격대의 철퇴",
+                "type": "완성",
+                "combination": "거인의 허리띠 + 연습용 장갑",
+                "stat": "체력 +150 공격 속도 +20% 치명타 확률 +20% 피해 증폭 +10%",
+                "effect": "치명타 적중 시 5초 동안 피해 증폭 5% 획득 (최대 4회 중첩)"
+            },
+            "ThiefsGloves": {
+                "name": "도적의 장갑",
+                "type": "완성",
+                "combination": "연습용 장갑 + 연습용 장갑",
+                "stat": "체력 150 치명타 확률 +20%",
+                "effect": "매 라운드: 무작위 아이템 2개 장착<br/>[아이템 슬롯 3개 소모]"
+            }
+        };
+
+        // 아이템 이미지 매핑 (로컬 파일 경로 사용)
+        const itemImages = {
+            'DeathBlade': 'item/TFT_Item_DeathBlade.png',
+            'MadredsBloodrazor': 'item/TFT_Item_MadredsBloodrazor.png',
+            'GuardianAngel': 'item/TFT_Item_GuardianAngel.png',
+            'Bloodthirster': 'item/TFT_Item_Bloodthirster.png',
+            'HextechGunblade': 'item/TFT_Item_HextechGunblade.png',
+            'SpearOfShojin': 'item/TFT_Item_SpearOfShojin.png',
+            'SteraksGage': 'item/TFT_Item_SteraksGage.png',
+            'InfinityEdge': 'item/TFT_Item_InfinityEdge.png',
+            'RapidFireCannon': 'item/TFT_Item_RapidFireCannon.png',
+            'TitansResolve': 'item/TFT_Item_TitansResolve.png',
+            'KrakenSlayer': 'item/TFT_Item_KrakenSlayer.png',
+            'GuinsoosRageblade': 'item/TFT_Item_GuinsoosRageblade.png',
+            'VoidStaff': 'item/TFT_Item_VoidStaff.png',
+            'Leviathan': 'item/TFT_Item_Leviathan.png',
+            'LastWhisper': 'item/TFT_Item_LastWhisper.png',
+            'BrambleVest': 'item/TFT_Item_BrambleVest.png',
+            'GargoyleStoneplate': 'item/TFT_Item_GargoyleStoneplate.png',
+            'Crownguard': 'item/TFT_Item_Crownguard.png',
+            'FrozenHeart': 'item/TFT_Item_FrozenHeart.png',
+            'RedBuff': 'item/TFT_Item_RedBuff.png',
+            'NightHarvester': 'item/TFT_Item_NightHarvester.png',
+            'DragonsClaw': 'item/TFT_Item_DragonsClaw.png',
+            'IonicSpark': 'item/TFT_Item_IonicSpark.png',
+            'AdaptiveHelm': 'item/TFT_Item_AdaptiveHelm.png',
+            'SpectralGauntlet': 'item/TFT_Item_SpectralGauntlet.png',
+            'Quicksilver': 'item/TFT_Item_Quicksilver.png',
+            'RabadonsDeathcap': 'item/TFT_Item_RabadonsDeathcap.png',
+            'ArchangelsStaff': 'item/TFT_Item_ArchangelsStaff.png',
+            'Morellonomicon': 'item/TFT_Item_Morellonomicon.png',
+            'JeweledGauntlet': 'item/TFT_Item_JeweledGauntlet.png',
+            'BlueBuff': 'item/TFT_Item_BlueBuff.png',
+            'spiritvisagerr': 'item/TFT_Item_spiritvisagerr.png',
+            'UnstableConcoction': 'item/TFT_Item_UnstableConcoction.png',
+            'WarmogsArmor': 'item/TFT_Item_WarmogsArmor.png',
+            'PowerGauntlet': 'item/TFT_Item_PowerGauntlet.png',
+            'ThiefsGloves': 'item/TFT_Item_ThiefsGloves.png'
+        };
+
+        // 폴백 아이콘 (이미지 로드 실패시 사용)
+        const fallbackIcons = {
+            'DeathBlade': '⚔️',
+            'MadredsBloodrazor': '⚔️',
+            'GuardianAngel': '🌙',
+            'Bloodthirster': '🩸',
+            'HextechGunblade': '🔫',
+            'SpearOfShojin': '🗡️',
+            'SteraksGage': '⚔️',
+            'InfinityEdge': '⚔️',
+            'RapidFireCannon': '🔥',
+            'TitansResolve': '💪',
+            'KrakenSlayer': '🐙',
+            'GuinsoosRageblade': '⚡',
+            'VoidStaff': '🪄',
+            'Leviathan': '🦷',
+            'LastWhisper': '🏹',
+            'BrambleVest': '🌵',
+            'GargoyleStoneplate': '🗿',
+            'Crownguard': '👑',
+            'FrozenHeart': '🛡️',
+            'RedBuff': '☀️',
+            'NightHarvester': '❤️',
+            'DragonsClaw': '🐲',
+            'IonicSpark': '⚡',
+            'AdaptiveHelm': '⛑️',
+            'SpectralGauntlet': '🌌',
+            'Quicksilver': '💍',
+            'RabadonsDeathcap': '🎩',
+            'ArchangelsStaff': '🪄',
+            'Morellonomicon': '🔥',
+            'JeweledGauntlet': '💎',
+            'BlueBuff': '💙',
+            'spiritvisagerr': '👻',
+            'UnstableConcoction': '⚖️',
+            'WarmogsArmor': '🛡️',
+            'PowerGauntlet': '🔨',
+            'ThiefsGloves': '🧤'
+        };
+
+        // 아이템 색상 매핑
+        const itemColors = {
+            'DeathBlade': '#ff4757',
+            'MadredsBloodrazor': '#ffa502',
+            'GuardianAngel': '#2f3542',
+            'Bloodthirster': '#c44569',
+            'HextechGunblade': '#e74c3c',
+            'SpearOfShojin': '#ff9ff3',
+            'SteraksGage': '#ffd93d',
+            'InfinityEdge': '#ff4757',
+            'RapidFireCannon': '#ff3838',
+            'TitansResolve': '#2c2c54',
+            'KrakenSlayer': '#00d2d3',
+            'GuinsoosRageblade': '#ffa502',
+            'VoidStaff': '#9c88ff',
+            'Leviathan': '#54a0ff',
+            'LastWhisper': '#8c7ae6',
+            'BrambleVest': '#5f27cd',
+            'GargoyleStoneplate': '#747d8c',
+            'Crownguard': '#ffd93d',
+            'FrozenHeart': '#54a0ff',
+            'RedBuff': '#ff6348',
+            'NightHarvester': '#ff6b35',
+            'DragonsClaw': '#ff3838',
+            'IonicSpark': '#00d2d3',
+            'AdaptiveHelm': '#747d8c',
+            'SpectralGauntlet': '#2f3542',
+            'Quicksilver': '#ddd',
+            'RabadonsDeathcap': '#9c88ff',
+            'ArchangelsStaff': '#54a0ff',
+            'Morellonomicon': '#ff6b35',
+            'JeweledGauntlet': '#00d2d3',
+            'BlueBuff': '#54a0ff',
+            'spiritvisagerr': '#2ed573',
+            'UnstableConcoction': '#f1c40f',
+            'WarmogsArmor': '#2ed573',
+            'PowerGauntlet': '#ff4757',
+            'ThiefsGloves': '#ffa502'
+        };
+
         let currentItem = null;
+
+        // 페이지 로드 시 초기화
+        window.onload = function () {
+            generateItemList();
+            generateItemCards();
+        };
+
+        function generateItemList() {
+            const itemList = document.getElementById('itemList');
+            itemList.innerHTML = '';
+
+            Object.keys(itemData).forEach(itemKey => {
+                const item = itemData[itemKey];
+                const itemElement = document.createElement('div');
+                itemElement.className = 'item';
+                itemElement.onclick = () => selectItem(itemKey, itemElement);
+
+                const imageUrl = itemImages[itemKey];
+                const fallbackIcon = fallbackIcons[itemKey] || '🔹';
+
+                itemElement.innerHTML = `
+                    <div class="item-icon" style="background: ${itemColors[itemKey] || '#666'};">
+                        <img src="${imageUrl}" alt="${item.name}" 
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='${fallbackIcon}';">
+                    </div>
+                    <div class="item-name">${item.name}</div>
+                `;
+
+                itemList.appendChild(itemElement);
+            });
+        }
+
+        function generateItemCards() {
+            const itemCards = document.getElementById('itemCards');
+            itemCards.innerHTML = '';
+
+            Object.keys(itemData).forEach(itemKey => {
+                const item = itemData[itemKey];
+                const cardElement = document.createElement('div');
+                cardElement.className = 'item-card';
+                cardElement.id = itemKey;
+
+                const imageUrl = itemImages[itemKey];
+                const fallbackIcon = fallbackIcons[itemKey] || '🔹';
+
+                cardElement.innerHTML = `
+                    <div class="item-image">
+                        <img src="${imageUrl}" alt="${item.name}" 
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="placeholder" style="display: none;">${fallbackIcon}</div>
+                    </div>
+                    <div class="item-stats">
+                        <div class="stat-card">
+                            <div class="stat-title">조합법</div>
+                            <div class="stat-value">
+                                <div class="combination">
+                                    ${generateCombination(item.combination)}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">스탯</div>
+                            <div class="stat-value">${item.stat}</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">효과</div>
+                            <div class="stat-value">${item.effect}</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">추천 사용처</div>
+                            <div class="stat-value">${getRecommendation(itemKey)}</div>
+                        </div>
+                    </div>
+                `;
+
+                itemCards.appendChild(cardElement);
+            });
+        }
+
+        function generateCombination(combinationText) {
+            const parts = combinationText.split(' + ');
+            let result = '';
+
+            parts.forEach((part, index) => {
+                const iconOrImage = getComponentIconOrImage(part);
+                result += `<div class="combination-item">${iconOrImage}</div>`;
+                if (index < parts.length - 1) {
+                    result += '<span class="combination-plus">+</span>';
+                }
+            });
+
+            return result;
+        }
+
+        function getComponentIconOrImage(componentName) {
+            const componentImages = {
+                'B.F. 대검': 'item/TFT_Item_BFSword.png',
+                '곡궁': 'item/TFT_Item_RecurveBow.png',
+                '쇠사슬 조끼': 'item/TFT_Item_ChainVest.png',
+                '음전자 망토': 'item/TFT_Item_NegatronCloak.png',
+                '쓸데없이 큰 지팡이': 'item/TFT_Item_NeedlesslyLargeRod.png',
+                '여신의 눈물': 'item/TFT_Item_TearOfTheGoddess.png',
+                '거인의 허리띠': 'item/TFT_Item_GiantsBelt.png',
+                '연습용 장갑': 'item/TFT_Item_SparringGloves.png'
+            };
+
+            const componentIcons = {
+                'B.F. 대검': '⚔️',
+                '곡궁': '🏹',
+                '쇠사슬 조끼': '🦺',
+                '음전자 망토': '🧥',
+                '쓸데없이 큰 지팡이': '🪄',
+                '여신의 눈물': '💧',
+                '거인의 허리띠': '🔗',
+                '연습용 장갑': '🧤'
+            };
+
+            const imageUrl = componentImages[componentName];
+            const fallbackIcon = componentIcons[componentName] || '🔹';
+
+            if (imageUrl) {
+                return `<img src="${imageUrl}" alt="${componentName}" 
+                            onerror="this.style.display='none'; this.parentElement.innerHTML='${fallbackIcon}';">`;
+            }
+
+            return fallbackIcon;
+        }
+
+        function getRecommendation(itemKey) {
+            const recommendations = {
+                'DeathBlade': '순수 AD 딜러 (진, 아펠리오스)',
+                'MadredsBloodrazor': '탱커 상대하는 딜러',
+                'GuardianAngel': '생존력이 필요한 암살자',
+                'Bloodthirster': '근접 AD 챔피언',
+                'HextechGunblade': '하이브리드 딜러',
+                'SpearOfShojin': '스킬 의존도가 높은 챔피언',
+                'SteraksGage': '탱킹 가능한 딜러, 전사 챔피언',
+                'InfinityEdge': 'AD 딜러, 스킬 딜러',
+                'RapidFireCannon': '광역 딜러, 지속딜 챔피언',
+                'TitansResolve': '근접 브루저형 딜러',
+                'KrakenSlayer': '평타 기반 딜러',
+                'GuinsoosRageblade': '평타 딜러',
+                'VoidStaff': 'AP 딜러 (마저 관통)',
+                'Leviathan': '평타와 스킬을 함께 사용하는 챔피언',
+                'LastWhisper': '원거리 AD 딜러',
+                'BrambleVest': '메인 탱커',
+                'GargoyleStoneplate': '다수의 적과 싸우는 탱커',
+                'Crownguard': '앞줄 AP 딜러',
+                'FrozenHeart': '서포트 탱커',
+                'RedBuff': '근접 탱커',
+                'NightHarvester': '체력이 높은 탱커',
+                'DragonsClaw': '메인 탱커 (AP 딜러 상대)',
+                'IonicSpark': '앞줄 탱커 (AP 카운터)',
+                'AdaptiveHelm': '위치에 따라 유연하게 활용',
+                'SpectralGauntlet': '디버프 탱커',
+                'Quicksilver': '메인 딜러 (CC 카운터용)',
+                'RabadonsDeathcap': 'AP 메인 딜러',
+                'ArchangelsStaff': 'AP 캐리 딜러',
+                'Morellonomicon': '광역 AP 딜러',
+                'JeweledGauntlet': 'AP 딜러',
+                'BlueBuff': '마나 소모가 많은 챔피언',
+                'spiritvisagerr': '지속적인 회복이 필요한 챔피언',
+                'UnstableConcoction': '근접 딜러, 유연한 아이템',
+                'WarmogsArmor': '메인 탱커',
+                'PowerGauntlet': '치명타 딜러',
+                'ThiefsGloves': '아이템 여유가 없을 때'
+            };
+
+            return recommendations[itemKey] || '다양한 챔피언에게 활용 가능';
+        }
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -1262,21 +1008,9 @@
             selectedCard.classList.add('active');
 
             // 헤더 업데이트
-            const itemData = getItemData(itemId);
-            document.getElementById('itemName').textContent = itemData.name;
-            document.getElementById('itemType').textContent = `${itemData.type} 아이템`;
-        }
-
-        function getItemData(itemId) {
-            const data = {
-                'SteraksGage': { name: '스테락의 도전', type: '완성' },
-                'fire': { name: '화염석', type: '화염' },
-                'water': { name: '물의석', type: '물' },
-                'leaf': { name: '잎의석', type: '자연' },
-                'shadow': { name: '그림자석', type: '어둠' },
-                'dragon': { name: '용의석', type: '용' }
-            };
-            return data[itemId] || { name: '알 수 없음', type: '알 수 없음' };
+            const itemDataObj = itemData[itemId];
+            document.getElementById('itemName').textContent = itemDataObj.name;
+            document.getElementById('itemType').textContent = `${itemDataObj.type} 아이템`;
         }
 
         function filterItems(searchTerm) {
