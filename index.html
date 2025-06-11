@@ -15,14 +15,30 @@
         body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .container {
             display: flex;
-            height: 100vh;
             min-height: 100vh;
+            position: relative;
+        }
+
+        /* 모바일 오버레이 */
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .mobile-overlay.active {
+            display: block;
         }
 
         .sidebar {
@@ -37,6 +53,7 @@
             position: relative;
             display: flex;
             flex-direction: column;
+            z-index: 1000;
         }
 
         .sidebar.collapsed {
@@ -61,6 +78,7 @@
             font-size: 18px;
             font-weight: bold;
             transition: opacity 0.3s ease;
+            white-space: nowrap;
         }
 
         .sidebar.collapsed .logo {
@@ -81,6 +99,24 @@
 
         .toggle-btn:hover {
             background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* 모바일 메뉴 버튼 */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 998;
         }
 
         .search-box {
@@ -184,16 +220,12 @@
             border-radius: 50%;
         }
 
-        .item-image img {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 15px;
-        }
-
         .item-name {
             font-weight: 500;
             transition: opacity 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .sidebar.collapsed .item-name {
@@ -223,14 +255,14 @@
         }
 
         .content-header h1 {
-            font-size: 28px;
+            font-size: clamp(20px, 4vw, 28px);
             font-weight: bold;
             margin-bottom: 5px;
         }
 
         .content-header p {
             opacity: 0.9;
-            font-size: 16px;
+            font-size: clamp(14px, 2vw, 16px);
         }
 
         .content-body {
@@ -253,7 +285,6 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -271,6 +302,13 @@
             border-radius: 20px;
             box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
             overflow: hidden;
+        }
+
+        .item-image img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 15px;
         }
 
         .item-image .placeholder {
@@ -311,19 +349,19 @@
         }
 
         .welcome-screen .icon {
-            font-size: 100px;
+            font-size: clamp(60px, 10vw, 100px);
             margin-bottom: 30px;
             opacity: 0.3;
         }
 
         .welcome-screen h2 {
-            font-size: 24px;
+            font-size: clamp(18px, 3vw, 24px);
             margin-bottom: 15px;
             color: #333;
         }
 
         .welcome-screen p {
-            font-size: 16px;
+            font-size: clamp(14px, 2vw, 16px);
             opacity: 0.7;
             line-height: 1.6;
         }
@@ -361,7 +399,9 @@
             color: #666;
         }
 
-        .item-list::-webkit-scrollbar {
+        /* 스크롤바 스타일 */
+        .item-list::-webkit-scrollbar,
+        .content-body::-webkit-scrollbar {
             width: 8px;
         }
 
@@ -379,10 +419,6 @@
             background: rgba(255, 255, 255, 0.5);
         }
 
-        .content-body::-webkit-scrollbar {
-            width: 8px;
-        }
-
         .content-body::-webkit-scrollbar-track {
             background: rgba(0, 0, 0, 0.05);
             border-radius: 10px;
@@ -392,10 +428,179 @@
             background: rgba(0, 0, 0, 0.1);
             border-radius: 10px;
         }
+
+        /* 태블릿 반응형 (768px - 1024px) */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 280px;
+            }
+            
+            .main-content {
+                margin: 15px;
+            }
+            
+            .content-body {
+                padding: 20px;
+            }
+            
+            .item-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 모바일 반응형 (768px 이하) */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -320px;
+                width: 320px;
+                height: 100vh;
+                border-radius: 0;
+                transition: left 0.3s ease;
+            }
+
+            .sidebar.mobile-open {
+                left: 0;
+            }
+
+            .sidebar.collapsed {
+                width: 320px;
+            }
+
+            .sidebar .toggle-btn {
+                display: none;
+            }
+
+            .main-content {
+                margin: 0;
+                border-radius: 0;
+                min-height: 100vh;
+                padding-top: 80px;
+            }
+
+            .content-header {
+                padding: 20px;
+            }
+
+            .content-body {
+                padding: 20px;
+            }
+
+            .item-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .item-image img {
+                width: 120px;
+                height: 120px;
+            }
+
+            .item-image .placeholder {
+                font-size: 60px;
+            }
+
+            .item-stats {
+                gap: 15px;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+        }
+
+        /* 소형 모바일 (480px 이하) */
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 100%;
+                left: -100%;
+            }
+
+            .search-box {
+                padding: 10px;
+            }
+
+            .item {
+                padding: 10px;
+            }
+
+            .content-header {
+                padding: 15px;
+            }
+
+            .content-body {
+                padding: 15px;
+            }
+
+            .welcome-screen {
+                padding: 30px 15px;
+            }
+
+            .item-image {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 20px;
+            }
+
+            .item-image img {
+                width: 100px;
+                height: 100px;
+            }
+
+            .item-image .placeholder {
+                font-size: 50px;
+            }
+
+            .stat-card {
+                padding: 12px;
+            }
+
+            .stat-title {
+                font-size: 14px;
+            }
+
+            .stat-value {
+                font-size: 14px;
+            }
+        }
+
+        /* 가로 모드 지원 */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .content-header {
+                padding: 15px;
+            }
+
+            .item-image {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 15px;
+            }
+
+            .item-image img {
+                width: 80px;
+                height: 80px;
+            }
+
+            .item-image .placeholder {
+                font-size: 40px;
+            }
+        }
     </style>
 </head>
 
 <body>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+    <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
+    
     <div class="container">
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -415,14 +620,14 @@
         <div class="main-content">
             <div class="content-header">
                 <h1 id="itemName">아이템 선택</h1>
-                <p id="itemType">왼쪽에서 아이템을 선택해주세요</p>
+                <p id="itemType">아이템을 선택해주세요</p>
             </div>
 
             <div class="content-body">
                 <div class="welcome-screen" id="welcomeScreen">
                     <div class="icon">🔍</div>
                     <h2>TFT 아이템 도감에 오신 것을 환영합니다!</h2>
-                    <p>왼쪽 목록에서 아이템을 선택하면<br>상세한 정보를 확인할 수 있습니다.</p>
+                    <p>아이템을 선택하면<br>상세한 정보를 확인할 수 있습니다.</p>
                 </div>
 
                 <div id="itemCards">
@@ -689,7 +894,7 @@
             }
         };
 
-        // 아이템 이미지 매핑 (로컬 파일 경로 사용)
+        // 아이템 이미지 매핑
         const itemImages = {
             'DeathBlade': 'item/TFT_Item_DeathBlade.png',
             'MadredsBloodrazor': 'item/TFT_Item_MadredsBloodrazor.png',
@@ -729,7 +934,7 @@
             'ThiefsGloves': 'item/TFT_Item_ThiefsGloves.png'
         };
 
-        // 폴백 아이콘 (이미지 로드 실패시 사용)
+        // 폴백 아이콘
         const fallbackIcons = {
             'DeathBlade': '⚔️',
             'MadredsBloodrazor': '⚔️',
@@ -810,12 +1015,49 @@
         };
 
         let currentItem = null;
+        let isMobile = false;
 
         // 페이지 로드 시 초기화
         window.onload = function () {
+            checkMobile();
             generateItemList();
             generateItemCards();
+            
+            // 리사이즈 이벤트 리스너
+            window.addEventListener('resize', () => {
+                checkMobile();
+                if (!isMobile) {
+                    closeMobileMenu();
+                }
+            });
         };
+
+        function checkMobile() {
+            isMobile = window.innerWidth <= 768;
+        }
+
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileOverlay');
+            
+            sidebar.classList.toggle('mobile-open');
+            overlay.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileOverlay');
+            
+            sidebar.classList.remove('mobile-open');
+            overlay.classList.remove('active');
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            if (!isMobile) {
+                sidebar.classList.toggle('collapsed');
+            }
+        }
 
         function generateItemList() {
             const itemList = document.getElementById('itemList');
@@ -981,11 +1223,6 @@
             return recommendations[itemKey] || '다양한 챔피언에게 활용 가능';
         }
 
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('collapsed');
-        }
-
         function selectItem(itemId, element) {
             // 이전 선택 해제
             if (currentItem) {
@@ -1011,6 +1248,11 @@
             const itemDataObj = itemData[itemId];
             document.getElementById('itemName').textContent = itemDataObj.name;
             document.getElementById('itemType').textContent = `${itemDataObj.type} 아이템`;
+
+            // 모바일에서는 메뉴 자동 닫기
+            if (isMobile) {
+                closeMobileMenu();
+            }
         }
 
         function filterItems(searchTerm) {
